@@ -95,6 +95,7 @@ export const CalendarReactView: React.FC<CalendarReactViewProps> = ({
       start: calEntry.startDate,
       end: adjustedEndDate,
       allDay: true,
+      classNames: calEntry.colorKey ? [colorClassForKey(calEntry.colorKey)] : [],
       extendedProps: {
         entry: calEntry.entry,
         originalEndDate: calEntry.endDate, // Keep track of original end date for drag operations
@@ -328,12 +329,14 @@ export const CalendarReactView: React.FC<CalendarReactViewProps> = ({
       initialView="dayGridMonth"
       firstDay={weekStartDay}
       headerToolbar={{
-        left: "",
+        left: "dayGridMonth,dayGridWeek",
         center: "title",
         right: "prev,today,next",
       }}
       buttonText={{
         today: "Today",
+        dayGridMonth: "Month",
+        dayGridWeek: "Week",
       }}
       navLinks={false}
       events={events}
@@ -354,6 +357,37 @@ interface CalendarEntry {
   entry: BasesEntry;
   startDate: Date;
   endDate?: Date;
+  colorKey?: string;
+}
+
+const TONE_MAP: Record<string, string> = {
+  attended: "bases-cal-tone-green",
+  done: "bases-cal-tone-green",
+  active: "bases-cal-tone-green",
+  planned: "bases-cal-tone-blue",
+  trip: "bases-cal-tone-blue",
+  proposed: "bases-cal-tone-orange",
+  idea: "bases-cal-tone-orange",
+  event: "bases-cal-tone-purple",
+  skipped: "bases-cal-tone-muted",
+  cancelled: "bases-cal-tone-muted",
+  canceled: "bases-cal-tone-muted",
+};
+
+const HASH_TONES = [
+  "bases-cal-tone-blue",
+  "bases-cal-tone-green",
+  "bases-cal-tone-purple",
+  "bases-cal-tone-orange",
+];
+
+function colorClassForKey(key: string): string {
+  if (TONE_MAP[key]) return TONE_MAP[key];
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) | 0;
+  }
+  return HASH_TONES[Math.abs(hash) % HASH_TONES.length];
 }
 
 function tryGetValue(entry: BasesEntry, propId: BasesPropertyId): Value | null {

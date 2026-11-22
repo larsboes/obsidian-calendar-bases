@@ -19,6 +19,7 @@ interface CalendarEntry {
   entry: BasesEntry;
   startDate: Date;
   endDate?: Date;
+  colorKey?: string;
 }
 
 export class CalendarView extends BasesView {
@@ -32,6 +33,7 @@ export class CalendarView extends BasesView {
   private entries: CalendarEntry[] = [];
   private startDateProp: BasesPropertyId | null = null;
   private endDateProp: BasesPropertyId | null = null;
+  private colorByProp: BasesPropertyId | null = null;
   private weekStartDay: number = 1;
 
   constructor(controller: QueryController, scrollEl: HTMLElement) {
@@ -73,6 +75,7 @@ export class CalendarView extends BasesView {
   private loadConfig(): void {
     this.startDateProp = this.config.getAsPropertyId("startDate");
     this.endDateProp = this.config.getAsPropertyId("endDate");
+    this.colorByProp = this.config.getAsPropertyId("colorBy");
     const weekStartDayValue = this.config.get("weekStartDay") as string;
 
     const dayNameToNumber: Record<string, number> = {
@@ -107,10 +110,13 @@ export class CalendarView extends BasesView {
         const endDate = this.endDateProp
           ? (this.extractDate(entry, this.endDateProp) ?? undefined)
           : undefined;
+        const colorVal = this.colorByProp ? entry.getValue(this.colorByProp) : null;
+        const colorKey = colorVal && colorVal.isTruthy() ? colorVal.toString().trim().toLowerCase() : undefined;
         this.entries.push({
           entry,
           startDate,
           endDate,
+          colorKey,
         });
       }
     }
@@ -264,6 +270,12 @@ export class CalendarView extends BasesView {
             type: "property",
             key: "endDate",
             placeholder: "Property",
+          },
+          {
+            displayName: "Color by (optional)",
+            type: "property",
+            key: "colorBy",
+            placeholder: "Property (e.g. status, kind)",
           },
         ],
       },
