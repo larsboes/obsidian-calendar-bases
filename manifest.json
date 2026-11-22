@@ -1,9 +1,10 @@
 {
-	"id": "calendar-bases",
-	"name": "Calendar Bases",
-	"version": "0.2.8",
+	"id": "calendar-bases-lb",
+	"name": "Calendar Bases (LB fork)",
+	"version": "0.2.8-lb.1",
 	"minAppVersion": "1.10.0",
 	"description": "Adds a calendar layout to bases so you can display notes with dates in an interactive calendar view.",
-	"author": "Edrick Leong",
-	"isDesktopOnly": false
+	"author": "Edrick Leong, fork by Lars Boes",
+	"isDesktopOnly": false,
+	"authorUrl": "https://github.com/larsboes/obsidian-calendar-bases"
 }

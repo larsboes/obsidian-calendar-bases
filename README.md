@@ -3,9 +3,9 @@
 > [!NOTE]
 > This is a fork of [edrickleong/obsidian-calendar-bases](https://github.com/edrickleong/obsidian-calendar-bases).
 > It adds Month and Week buttons and a "Color by" option, and it updates FullCalendar to
-> 6.1.22. The fork keeps the upstream plugin id. Obsidian may offer the upstream release as an
-> update, and installing that update replaces this build. Build and install with
-> `bun run deploy`.
+> 6.1.22. Its plugin id is `calendar-bases-lb`, so Obsidian does not replace it with an upstream
+> release. It registers the same `calendar` view, so existing Bases keep working. Do not enable
+> it together with upstream Calendar Bases. Build and install with `bun run deploy`.
 
 <a href='https://ko-fi.com/W7W71T4JPP' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
